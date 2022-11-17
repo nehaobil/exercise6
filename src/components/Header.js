@@ -1,18 +1,32 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import {getAuth, signOut} from "firebase/auth";
 
-function Header() {
+function Header({setUserInformation, setIsLoggedIn}) {
+    function logout() {
+        const auth = getAuth();
+        signOut(auth)
+            .then(() => {
+                setUserInformation({});
+                setIsLoggedIn(false);
+            })
+            .catch((error) => {
+                console.warn(error);
+            })
+    }
+
+
     return (
         <nav>
-            <a href="/">
+            <Link to="/">
                 <p>Home</p>
-            </a>
-            <a href="/login">
+            </Link>
+            <Link to="/login">
                 <p>Log in</p>
-            </a>
-            <a href="/create">
+            </Link>
+            <Link to="/create">
                 <p>Create User</p>
-            </a>
+            </Link>
         </nav>
     )
 }
